@@ -3,4 +3,4 @@ project(token_ring C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(token_ring main.c clientTCP.c clientTCP.h clientUDP.c clientUDP.h tokenRing.c tokenRing.h)
+add_executable(token_ring client.c clientTCP.c clientTCP.h clientUDP.c clientUDP.h tokenRing.c tokenRing.h client.h)

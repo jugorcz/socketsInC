@@ -5,4 +5,8 @@
 #ifndef TOKEN_RING_CLIENTUDP_H
 #define TOKEN_RING_CLIENTUDP_H
 
+#include "client.h"
+
+void runUDPclient(configuration_t* configuration);
+
 #endif //TOKEN_RING_CLIENTUDP_H

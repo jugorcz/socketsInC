@@ -123,6 +123,33 @@ token_ring/fast:
 	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/build
 .PHONY : token_ring/fast
 
+client.o: client.c.o
+
+.PHONY : client.o
+
+# target to build an object file
+client.c.o:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/client.c.o
+.PHONY : client.c.o
+
+client.i: client.c.i
+
+.PHONY : client.i
+
+# target to preprocess a source file
+client.c.i:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/client.c.i
+.PHONY : client.c.i
+
+client.s: client.c.s
+
+.PHONY : client.s
+
+# target to generate assembly for a file
+client.c.s:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/client.c.s
+.PHONY : client.c.s
+
 clientTCP.o: clientTCP.c.o
 
 .PHONY : clientTCP.o
@@ -177,33 +204,6 @@ clientUDP.c.s:
 	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/clientUDP.c.s
 .PHONY : clientUDP.c.s
 
-main.o: main.c.o
-
-.PHONY : main.o
-
-# target to build an object file
-main.c.o:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/main.c.o
-.PHONY : main.c.o
-
-main.i: main.c.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/main.c.i
-.PHONY : main.c.i
-
-main.s: main.c.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/main.c.s
-.PHONY : main.c.s
-
 tokenRing.o: tokenRing.c.o
 
 .PHONY : tokenRing.o
@@ -240,15 +240,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... token_ring"
 	@echo "... edit_cache"
+	@echo "... client.o"
+	@echo "... client.i"
+	@echo "... client.s"
 	@echo "... clientTCP.o"
 	@echo "... clientTCP.i"
 	@echo "... clientTCP.s"
 	@echo "... clientUDP.o"
 	@echo "... clientUDP.i"
 	@echo "... clientUDP.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... tokenRing.o"
 	@echo "... tokenRing.i"
 	@echo "... tokenRing.s"
