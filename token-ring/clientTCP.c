@@ -14,9 +14,8 @@
 
 int receivingSocket;
 int sendingSocket;
-int acceptSocket;
+int listeningSocket;
 tokenRing_t token;
-int nextPort;
 
 
 configuration_t* conf;
@@ -37,16 +36,15 @@ void runTCPClient(configuration_t* configuration)
 
 void runAsFirstClient()
 {
-    receivingSocket = initReceivingSocket();
-    sendingSocket = initSocket();
+    initListeningSocket();
 
     //connecting with oneself
-    acceptSocket = initAcceptSocket();
+    initReceivingSocket();
 
     //wait for init token from other client
-    read(acceptSocket, &token, sizeof(token));
+    read(receivingSocket, &token, sizeof(token));
 
-    nextPort = token.port;
+    conf->nextPort = token.port;
     token.msgType = MESSAGE;
     token.value = rand() & 10000;
     printf("Send %d value\n", token.value);
@@ -56,27 +54,29 @@ void runAsFirstClient()
 
 void runAsNextClient()
 {
-
+    printf("Start work as next client.\n");
+    initListeningSocket();
+    sendInitToken();
 }
 
-int initReceivingSocket()
+void initListeningSocket()
 {
-    int recSocket = initSocket();
+    printf("Created socked for listening other clients.\n");
+    listeningSocket = initSocket();
 
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     addr.sin_port = htons(conf->clientPort);
 
-    if (bind(recSocket, (struct sockaddr *) &addr, sizeof(addr)) != 0) {
+    if (bind(listeningSocket, (struct sockaddr *) &addr, sizeof(addr)) != 0) {
         exit(1);
     }
 
-    if (listen(recSocket, 10) != 0) {
+    //non-blocking
+    if (listen(listeningSocket, 10) != 0) {
         exit(1);
     }
-
-    return recSocket;
 }
 
 int initSocket()
@@ -87,16 +87,15 @@ int initSocket()
     return s;
 }
 
-int initAcceptSocket()
+void initReceivingSocket()
 {
     //accept is blocking
-    int s = accept(receivingSocket, NULL, NULL);
-    if(s == -1)
+    receivingSocket = accept(listeningSocket, NULL, NULL);
+    if(receivingSocket == -1)
     {
         printf("Error in accept function.\n");
         exit(1);
     }
-    return s;
 }
 
 
@@ -105,13 +104,13 @@ void TCPConnect()
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    addr.sin_port = htons(nextPort);
+    addr.sin_port = htons(conf->nextPort);
 
     //connect is blocking
     int connected = connect(sendingSocket,(struct sockaddr *) &addr, sizeof(addr));
     if(connected == -1)
     {
-        printf("\n");
+        printf("Error in connect function\n");
         exit(1);
     }
 }
@@ -123,25 +122,35 @@ void sendToken(tokenRing_t token)
     TCPConnect();
     write(sendingSocket, &token, sizeof(token));
     close(sendingSocket);
+}
 
+
+void sendInitToken()
+{
+    printf("Send init token.\n");
+    tokenRing_t token;
+    token.msgType = NEW_USER;
+    token.nextPort = conf->nextPort;
+    token.port = conf->clientPort;
+    sendToken(token);
 }
 
 void networkLoop()
 {
     while (1) {
         tokenRing_t token;
-        acceptSocket = initAcceptSocket();
-        read(acceptSocket, &token, sizeof(token));
+        initReceivingSocket();
+        read(receivingSocket, &token, sizeof(token));
 
         switch (token.msgType) {
             case NEW_USER:
                 printf("Received new_user token\n");
                 printf("Got %d\n", token.nextPort);
 
-                if (nextPort == token.nextPort)
+                if (conf->nextPort == token.nextPort)
                 {
-                    printf("Swithicng ports\n");
-                    nextPort = token.port;
+                    printf("Switching ports\n");
+                    conf->nextPort = token.port;
                 }
                 else
                     sendToken(token);
@@ -152,7 +161,7 @@ void networkLoop()
                 printf("Received %d\n", token.value);
                 token.value = rand() % 10000;
                 printf("Sending %d\n", token.value);
-                sleep(1);
+                sleep(2);
                 sendToken(token);
         }
         if(token.value == 1)

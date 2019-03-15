@@ -5,7 +5,7 @@
 #ifndef TOKEN_RING_CLIENTUDP_H
 #define TOKEN_RING_CLIENTUDP_H
 
-#include "client.h"
+#include "common.h"
 
 void runUDPClient(configuration_t* configuration);
 

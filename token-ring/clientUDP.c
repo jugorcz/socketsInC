@@ -3,6 +3,7 @@
 //
 
 #include "clientUDP.h"
+#include "common.h"
 
 #include <stdio.h>
 

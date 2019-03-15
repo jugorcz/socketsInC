@@ -231,33 +231,6 @@ common.c.s:
 	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/common.c.s
 .PHONY : common.c.s
 
-tokenRing.o: tokenRing.c.o
-
-.PHONY : tokenRing.o
-
-# target to build an object file
-tokenRing.c.o:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/tokenRing.c.o
-.PHONY : tokenRing.c.o
-
-tokenRing.i: tokenRing.c.i
-
-.PHONY : tokenRing.i
-
-# target to preprocess a source file
-tokenRing.c.i:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/tokenRing.c.i
-.PHONY : tokenRing.c.i
-
-tokenRing.s: tokenRing.c.s
-
-.PHONY : tokenRing.s
-
-# target to generate assembly for a file
-tokenRing.c.s:
-	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/tokenRing.c.s
-.PHONY : tokenRing.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -279,9 +252,6 @@ help:
 	@echo "... common.o"
 	@echo "... common.i"
 	@echo "... common.s"
-	@echo "... tokenRing.o"
-	@echo "... tokenRing.i"
-	@echo "... tokenRing.s"
 .PHONY : help
 
 
