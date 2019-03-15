@@ -7,6 +7,8 @@
 
 #include "client.h"
 
-void runUDPclient(configuration_t* configuration);
+void runUDPClient(configuration_t* configuration);
+
+
 
 #endif //TOKEN_RING_CLIENTUDP_H

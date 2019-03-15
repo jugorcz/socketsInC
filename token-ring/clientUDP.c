@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-void runUDPclient(configuration_t* configuration)
+void runUDPClient(configuration_t* configuration)
 {
     printf("\n----------Client UDP----------\n");
 }

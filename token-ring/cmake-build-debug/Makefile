@@ -204,6 +204,33 @@ clientUDP.c.s:
 	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/clientUDP.c.s
 .PHONY : clientUDP.c.s
 
+common.o: common.c.o
+
+.PHONY : common.o
+
+# target to build an object file
+common.c.o:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/common.c.o
+.PHONY : common.c.o
+
+common.i: common.c.i
+
+.PHONY : common.i
+
+# target to preprocess a source file
+common.c.i:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/common.c.i
+.PHONY : common.c.i
+
+common.s: common.c.s
+
+.PHONY : common.s
+
+# target to generate assembly for a file
+common.c.s:
+	$(MAKE) -f CMakeFiles/token_ring.dir/build.make CMakeFiles/token_ring.dir/common.c.s
+.PHONY : common.c.s
+
 tokenRing.o: tokenRing.c.o
 
 .PHONY : tokenRing.o
@@ -249,6 +276,9 @@ help:
 	@echo "... clientUDP.o"
 	@echo "... clientUDP.i"
 	@echo "... clientUDP.s"
+	@echo "... common.o"
+	@echo "... common.i"
+	@echo "... common.s"
 	@echo "... tokenRing.o"
 	@echo "... tokenRing.i"
 	@echo "... tokenRing.s"

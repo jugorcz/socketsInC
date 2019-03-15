@@ -52,9 +52,9 @@ int main(int argc, char** argv) {
     printf("Protocol: %s\n", configuration.protocol);
 
     if(strcmp(configuration.protocol, "TCP") == 0)
-        runTCPclient(&configuration);
+        runTCPClient(&configuration);
     else
-        runUDPclient(&configuration);
-    
+        runUDPClient(&configuration);
+
     return 0;
 }
