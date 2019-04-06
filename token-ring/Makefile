@@ -21,5 +21,5 @@ tcp1:
 tcp2:
 	./client B 10124 127.0.0.1 10123 0 TCP
 
-tcp2:
+tcp3:
 	./client C 10125 127.0.0.1 10123 0 TCP

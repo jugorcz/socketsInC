@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <sys/types.h>
 #include <memory.h>
+#include <errno.h>
 
 #include "clientTCP.h"
 
@@ -16,7 +17,6 @@ int receivingSocket;
 int sendingSocket;
 int listeningSocket;
 tokenRing_t token;
-
 
 configuration_t* conf;
 
@@ -69,12 +69,16 @@ void initListeningSocket()
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     addr.sin_port = htons(conf->clientPort);
 
-    if (bind(listeningSocket, (struct sockaddr *) &addr, sizeof(addr)) != 0) {
+    if (bind(listeningSocket, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
+        printf("%s\n",strerror(errno));
+        printf("Error in bind function.\n");
         exit(1);
     }
 
     //non-blocking
     if (listen(listeningSocket, 10) != 0) {
+        printf("%s\n",strerror(errno));
+        printf("Error in listen function.\n");
         exit(1);
     }
 }
@@ -82,8 +86,10 @@ void initListeningSocket()
 int initSocket()
 {
     int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (s == -1)
+    if (s == -1) {
+        printf("%s\n", strerror(errno));
         exit(1);
+    }
     return s;
 }
 
@@ -94,10 +100,10 @@ void initReceivingSocket()
     if(receivingSocket == -1)
     {
         printf("Error in accept function.\n");
+        printf("%s\n",strerror(errno));
         exit(1);
     }
 }
-
 
 void TCPConnect()
 {
@@ -111,10 +117,10 @@ void TCPConnect()
     if(connected == -1)
     {
         printf("Error in connect function\n");
+        printf("%s\n",strerror(errno));
         exit(1);
     }
 }
-
 
 void sendToken(tokenRing_t token)
 {
@@ -123,7 +129,6 @@ void sendToken(tokenRing_t token)
     write(sendingSocket, &token, sizeof(token));
     close(sendingSocket);
 }
-
 
 void sendInitToken()
 {
